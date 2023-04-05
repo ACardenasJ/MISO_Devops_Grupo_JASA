@@ -1,0 +1,49 @@
+{
+	"info": {
+		"_postman_id": "0ebb46d9-3d77-4190-bb03-6328820e8020",
+		"name": "Rutas-Devops-Semestre3-Clico2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7032252"
+	},
+	"item": [
+		{
+			"name": "Health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/blacklists/ping",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"blacklists",
+						"ping"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getBlackList",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "emailToBlackList",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

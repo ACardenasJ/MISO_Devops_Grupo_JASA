@@ -6,18 +6,12 @@ from datetime import timedelta
 import os
 from modelos.modelos import db
 
-from vistas import VistaConsultarBlackList, VistaCrearBlackLis, VistaHealthCheck
+from vistas import VistaConsultarBlackList, VistaCrearBlackList, VistaHealthCheck
 
-DATABASE_URI = os.environ['DATABASE_URL'] 
-if DATABASE_URI is None or DATABASE_URI == '':
-    DATABASE_URI = 'sqlite:///test_user.db'
-
-print(DATABASE_URI)
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blackList.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'frase-secreta'
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=30)
 app.config['PROPAGATE_EXCEPTIONS'] = True
 
 app_context = app.app_context()
@@ -28,9 +22,9 @@ db.create_all()
 cors = CORS(app)
 
 api = Api(app)
-api.add_resource(VistaCrearBlackLis, '/blacklists')
+api.add_resource(VistaCrearBlackList, '/blacklists')
 api.add_resource(VistaConsultarBlackList, '/blacklists/<string:email>')
-api.add_resource(VistaHealthCheck, '/users/ping')
+api.add_resource(VistaHealthCheck, '/blacklists/ping')
 
 jwt = JWTManager(app)
 

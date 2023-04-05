@@ -1,8 +1,7 @@
 from modelos.modelos import ( BlackList, BlackListSchema, db)
 from datetime import datetime, timedelta
-import hashlib
 from flask import request
-from flask_jwt_extended import create_access_token
+
 from flask_restful import Resource
 
 blackList_schema = BlackListSchema()
@@ -15,7 +14,7 @@ class VistaConsultarBlackList(Resource):
     def get(self, email):
         if 'Authorization' in request.headers:
             token = request.headers['Authorization'].split(' ')[1]
-            email_ = request.json.get('email', None)
+            #email_ = request.json.get('email', None)
             email_in_blackList = BlackList.query.filter_by(email=email).first()
             if email_in_blackList:
                 return {'id':email_in_blackList.id, 'email':email_in_blackList.email}, 200
@@ -39,7 +38,7 @@ class VistaCrearBlackList(Resource):
                 return {'error': 'El email ya se encuentra en la lista negra'}, 412
             now = datetime.now()
             createdAt = now
-            blackList = BlackList( mail=email, 
+            blackList = BlackList(email=email, 
                                 app_uuid=app_uuid, 
                                 blocked_reason=blocked_reason, 
                                 createdAt=createdAt, 

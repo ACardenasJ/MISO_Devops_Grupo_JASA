@@ -4,22 +4,19 @@ from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
 db = SQLAlchemy()
 
-class Usuario(db.Model):
-    __tablename__ = 'usuario'
+class BlackList(db.Model):
+    __tablename__ = 'blackList'
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(50))
     email = db.Column(db.String(50))
-    password = db.Column(db.String(500))
-    salt = db.Column(db.String(50))
-    token = db.Column(db.String(500))
-    expireAt = db.Column(db.DateTime)
+    app_uuid = db.Column(db.String(50))
+    blocked_reason = db.Column(db.String(255))
     createdAt = db.Column(db.DateTime)
-    state = db.Column(db.String(50))
+    ipSolicitud = db.Column(db.String(50))
 
 
-class UsuarioSchema(SQLAlchemyAutoSchema):
+class BlackListSchema(SQLAlchemyAutoSchema):
     class Meta:
-        model = Usuario
+        model = BlackList
         include_relationships = True
         load_instance = True

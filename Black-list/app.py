@@ -6,7 +6,7 @@ from datetime import timedelta
 import os
 from modelos.modelos import db
 
-from vistas import VistaCrearUsuario, VistaGeneracionToken, VistaInfoUsuario, VistaHealthCheck, VistaBaseUsuario
+from vistas import VistaConsultarBlackList, VistaCrearBlackLis, VistaHealthCheck
 
 DATABASE_URI = os.environ['DATABASE_URL'] 
 if DATABASE_URI is None or DATABASE_URI == '':
@@ -28,10 +28,8 @@ db.create_all()
 cors = CORS(app)
 
 api = Api(app)
-api.add_resource(VistaCrearUsuario, '/users/')
-api.add_resource(VistaBaseUsuario, '/user_base')
-api.add_resource(VistaGeneracionToken, '/users/auth')
-api.add_resource(VistaInfoUsuario, '/users/me')
+api.add_resource(VistaCrearBlackLis, '/blacklists')
+api.add_resource(VistaConsultarBlackList, '/blacklists/<string:email>')
 api.add_resource(VistaHealthCheck, '/users/ping')
 
 jwt = JWTManager(app)

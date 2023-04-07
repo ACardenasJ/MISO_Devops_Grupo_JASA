@@ -3,3 +3,4 @@
 *.DS_Store
 Black-list/.DS_Store
 *.db
+**/__pycache__/**

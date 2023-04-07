@@ -8,7 +8,7 @@ source venv/bin/activate
 deactivate
 # Dirigirse a la carpeta del componente
 ```
-cd MISO_Devops_Grupo_JASA/Black-list
+cd MISO_Devops_Grupo_JASA/black_list
 ```
 -- Instalar dependencias
 ```
@@ -17,6 +17,7 @@ pip3 install -r requirements.txt
 -- En caso de que se quiera correr el componente de Flask individualmente local
 -- black-list
 ```
+export FLASK_APP=application.py
 flask run -p 3000
 ```
 

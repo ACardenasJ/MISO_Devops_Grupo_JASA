@@ -26,6 +26,24 @@
 			"response": []
 		},
 		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{url}}/",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Agregar a BlackList",
 			"request": {
 				"method": "POST",
@@ -119,7 +137,7 @@
 	"variable": [
 		{
 			"key": "url",
-			"value": "localhost:3000",
+			"value": "apientrega1devopstest1-env.eba-a9aqhczm.us-east-1.elasticbeanstalk.com/",
 			"type": "string"
 		}
 	]

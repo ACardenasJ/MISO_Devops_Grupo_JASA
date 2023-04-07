@@ -1,11 +1,15 @@
 from modelos.modelos import ( BlackList, BlackListSchema, db)
 from datetime import datetime, timedelta
 from flask import request
-
 from flask_restful import Resource
+from json import dumps
+
 
 blackList_schema = BlackListSchema()
 
+class VistaHealth(Resource):
+    def get(self):
+        return 'API BLACKLIST CORRIENDO BIEN', 200
 class VistaHealthCheck(Resource):
     def get(self):
         return 'pong', 200

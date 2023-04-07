@@ -21,3 +21,5 @@ export FLASK_APP=application.py
 flask run -p 3000
 ```
 
+[Implementar deploy en AWS Beanstalk](https://docs.aws.amazon.com/es_es/elasticbeanstalk/latest/dg/using-features.rolling-version-deploy.html)
+

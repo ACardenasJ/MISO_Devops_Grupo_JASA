@@ -33,7 +33,8 @@ class VistaCrearBlackList(Resource):
             email = request.json.get('email', None)
             app_uuid = request.json.get('app_uuid', None)
             blocked_reason = request.json.get('blocked_reason', None)
-            ipSolicitud = request.json.get('ipSolicitud', None)
+            #ipSolicitud = request.json.get('ipSolicitud', None)
+            ipSolicitud = request.remote_addr
             if not email or not app_uuid or not blocked_reason:
                 return {'error': 'Uno o Alguno de los campos no estan presentes en la solicitud.'}, 400  
             if not ipSolicitud:

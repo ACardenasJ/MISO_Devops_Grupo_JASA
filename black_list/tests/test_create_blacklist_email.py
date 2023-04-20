@@ -19,6 +19,15 @@ def fake_str(length):
     result_str = ''.join(random.choice(letters) for i in range(length))
     return result_str.upper()
 
+class myProxyHack(object):
+
+    def __init__(self, app):
+        self.app = app
+
+    def __call__(self, environ, start_response):
+        environ['REMOTE_ADDR'] = environ.get('REMOTE_ADDR', '127.0.0.1')
+        return self.app(environ, start_response)
+
 class TestVistaHealthCheck(unittest.TestCase):
     rand_email = fake_str(3) + '@' + fake_str(3) + '.com'
     rand_app_uuid = fake_str(10)
@@ -27,6 +36,7 @@ class TestVistaHealthCheck(unittest.TestCase):
 
     def setUp(self):
         self.app = app
+        self.app.wsgi_app = myProxyHack(app.wsgi_app)
         self.client = self.app.test_client()
         self.token_ = ''
 
@@ -42,11 +52,13 @@ class TestVistaHealthCheck(unittest.TestCase):
             "blocked_reason": self.rand_blocked_reason,
             "ipSolicitud": self.rand_ip,
         }  
-
+        
         response = self.client.post('/blacklists',
                                     data=json.dumps(data_create), 
                                     content_type='application/json',
-                                    headers={'Authorization': 'Bearer 1234321234321'})
+                                    headers={'Authorization': 'Bearer 1234321234321'},
+                                    environ_base={'REMOTE_ADDR': '127.0.0.1'})
+        #print(response.data)
         self.assertEqual(response.status_code, 201)
         response_data = json.loads(response.get_data(as_text=True))
         self.assertIn("id", response_data)
@@ -64,6 +76,22 @@ class TestVistaHealthCheck(unittest.TestCase):
                                     data=json.dumps(data_create), 
                                     content_type='application/json',
                                     headers={'Authorization': 'Bearer 1234321234321'})
+        #print(response.data)
+        self.assertEqual(response.status_code, 412)
+        response_data = json.loads(response.get_data(as_text=True))
+        self.assertIn("error", response_data)
+    
+    def test_create_offer_error_2(self):
+        data_create = {
+            "email": self.rand_email,
+            "blocked_reason": self.rand_blocked_reason,
+        }  
+
+        response = self.client.post('/blacklists',
+                                    data=json.dumps(data_create), 
+                                    content_type='application/json',
+                                    headers={'Authorization': 'Bearer 1234321234321'})
+        #print(response.data)
         self.assertEqual(response.status_code, 400)
         response_data = json.loads(response.get_data(as_text=True))
         self.assertIn("error", response_data)

@@ -7,7 +7,14 @@ import os
 from modelos.modelos import db
 from vistas import VistaConsultarBlackList, VistaCrearBlackList, VistaHealthCheck, VistaHealth
 
-DATABASE_URI = 'postgresql+psycopg2://postgres:DreamTeam123*@database-1.cazbca9jsbii.us-east-1.rds.amazonaws.com/postgres'
+if 'DATABASE_URL' not in os.environ:
+    DATABASE_URI = 'postgresql+psycopg2://postgres:DreamTeam123*@database-1.cazbca9jsbii.us-east-1.rds.amazonaws.com/postgres'
+else:
+    DATABASE_URI = os.environ['DATABASE_URL'] 
+if DATABASE_URI is None or DATABASE_URI == '':
+    DATABASE_URI = 'sqlite:///test.db'
+
+print('DATABASE_URI:',DATABASE_URI)
 
 application = Flask(__name__)
 application.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI

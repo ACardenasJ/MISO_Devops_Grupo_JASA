@@ -33,7 +33,7 @@ class VistaCrearBlackList(Resource):
             email = request.json.get('email', None)
             app_uuid = request.json.get('app_uuid', None)
             blocked_reason = request.json.get('blocked_reason', None)
-            ipSolicitud = request.remote_addr
+            ipSolicitud = request.json.get('ipSolicitud', None)
             if not email or not app_uuid or not blocked_reason:
                 return {'error': 'Uno o Alguno de los campos no estan presentes en la solicitud.'}, 400  
             if not ipSolicitud:
@@ -49,5 +49,5 @@ class VistaCrearBlackList(Resource):
                                 ipSolicitud=ipSolicitud)
             db.session.add(blackList)
             db.session.commit()
-            return {'id':blackList.id, 'email:': blackList.email,'createdAt':str(blackList.createdAt)}, 201
+            return {'id':blackList.id, 'email': blackList.email,'createdAt':str(blackList.createdAt)}, 201
         return {'error': 'El token no está en el encabezado de la solicitud.'}, 400

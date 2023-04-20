@@ -21,5 +21,8 @@ export FLASK_APP=application.py
 flask run -p 3000
 ```
 
+coverage run --source=. -m unittest tests/test_create_blacklist_email.py
+coverage report --fail-under=80
+
 [Implementar deploy en AWS Beanstalk](https://docs.aws.amazon.com/es_es/elasticbeanstalk/latest/dg/using-features.rolling-version-deploy.html)
 

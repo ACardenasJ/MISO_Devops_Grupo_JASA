@@ -3,10 +3,10 @@ name: Python application CI/CD
 on:
   push:
     branches:
-      - UTCreate
+      - main
   pull_request:
     branches:
-      - UTCreate
+      - main
 
 env:
   PYTHON_VERSION: 3.8

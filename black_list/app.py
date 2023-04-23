@@ -14,7 +14,7 @@ else:
 if DATABASE_URI is None or DATABASE_URI == '':
     DATABASE_URI = 'sqlite:///test.db'
 
-print('DATABASE_URI:',DATABASE_URI)
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI

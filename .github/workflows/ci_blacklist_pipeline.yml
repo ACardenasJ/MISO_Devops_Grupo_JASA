@@ -1,0 +1,72 @@
+name: Python application CI/CD - offer-management
+
+on:
+  push:
+    branches:
+      - UTCreate
+  pull_request:
+    branches:
+      - UTCreate
+
+env:
+  PYTHON_VERSION: 3.8
+  DATABASE_URL: 'postgresql+psycopg2://postgres:DreamTeam123*@database-1.cazbca9jsbii.us-east-1.rds.amazonaws.com/postgres'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python ${{ env.PYTHON_VERSION }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Create virtual environment
+      run: |
+        python -m venv env
+        source env/bin/activate
+
+    - name: run pwd and ls
+      run: |
+        pwd
+        ls
+
+    - name: Install dependencies
+      run: |
+        pip install -r black_list/requirements.txt
+
+    - name: Run tests with coverage
+      run: |
+        coverage run --source=. --omit=*/__init__.py,*/tests/* -m unittest black_list/tests/test_blacklist_email.py
+        coverage report --fail-under=80
+
+    - name: Check coverage
+      run: |
+        if [ "$(coverage report --fail-under=80 | grep 'TOTAL' | awk '{print $4}' | sed 's/%//g')" -lt 80 ]; then
+          echo "Coverage is less than 80%. Exiting with error code 1."
+          exit 1
+        fi
+
+    - name: Print success message
+      run: |
+        echo "Success!"
+    
+  automerge:
+      name: merge-branch
+      needs: build
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout de repositorio
+          uses: actions/checkout@v2
+
+        - name: Merge UTCreate -> master
+          uses: devmasx/merge-branch@master
+          with:
+            type: now
+            label_name: 'merged in release'
+            target_branch: release
+            github_token: ${{ github.token }}

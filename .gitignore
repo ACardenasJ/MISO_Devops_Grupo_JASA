@@ -1,6 +1,13 @@
 /Black-list/venv
 /venv
+venv/*
 *.DS_Store
 Black-list/.DS_Store
 *.db
 **/__pycache__/**
+.coverage
+*.coverage
+.pytest_cache
+*.pytest_cache
+__pycache__/*
+__pycache__

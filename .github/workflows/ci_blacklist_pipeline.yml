@@ -3,10 +3,10 @@ name: Python application CI/CD
 on:
   push:
     branches:
-      - main
+      - UTCreate
   pull_request:
     branches:
-      - main
+      - UTCreate
 
 env:
   PYTHON_VERSION: 3.8
@@ -63,7 +63,7 @@ jobs:
         - name: Checkout de repositorio
           uses: actions/checkout@v2
 
-        - name: Merge UTCreate -> master
+        - name: Merge UTCreate -> main
           uses: devmasx/merge-branch@master
           with:
             type: now

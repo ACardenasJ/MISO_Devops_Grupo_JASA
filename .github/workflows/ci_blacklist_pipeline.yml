@@ -3,10 +3,10 @@ name: Python application CI/CD
 on:
   push:
     branches:
-      - UTCreate
+      - main
   pull_request:
     branches:
-      - UTCreate
+      - main
 
 env:
   PYTHON_VERSION: 3.8
@@ -67,6 +67,6 @@ jobs:
           uses: devmasx/merge-branch@master
           with:
             type: now
-            label_name: 'merged in master'
-            target_branch: release
+            label_name: 'merged in main'
+            target_branch: main
             github_token: ${{ github.token }}

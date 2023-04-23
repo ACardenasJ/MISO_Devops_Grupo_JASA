@@ -15,7 +15,6 @@ if DATABASE_URI is None or DATABASE_URI == '':
     DATABASE_URI = 'sqlite:///test.db'
 
 
-
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

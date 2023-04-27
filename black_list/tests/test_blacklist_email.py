@@ -6,7 +6,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 import unittest
 from unittest.mock import patch
-from app import app
+from application import application
 import json
 import random
 import string
@@ -21,12 +21,12 @@ def fake_str(length):
 
 class myProxyHack(object):
 
-    def __init__(self, app):
-        self.app = app
+    def __init__(self, application):
+        self.application = application
 
     def __call__(self, environ, start_response):
         environ['REMOTE_ADDR'] = environ.get('REMOTE_ADDR', '127.0.0.1')
-        return self.app(environ, start_response)
+        return self.application(environ, start_response)
 
 class TestBlackList(unittest.TestCase):
     rand_email = fake_str(3) + '@' + fake_str(3) + '.com'
@@ -35,10 +35,14 @@ class TestBlackList(unittest.TestCase):
     rand_ip = fake_str(10)
 
     def setUp(self):
-        self.app = app
-        self.app.wsgi_app = myProxyHack(app.wsgi_app)
-        self.client = self.app.test_client()
+        self.application = application
+        self.application.wsgi_app = myProxyHack(application.wsgi_app)
+        self.client = self.application.test_client()
         self.token_ = ''
+    
+    def test_health(self):
+        response = self.client.get('/')
+        self.assertEqual(response.status_code, 200)
 
     def test_health_check(self):
         response = self.client.get('/blacklists/ping')

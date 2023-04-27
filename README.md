@@ -21,8 +21,26 @@ export FLASK_APP=application.py
 flask run -p 3000
 ```
 
-coverage run --source=. -m unittest tests/test_create_blacklist_email.py
+## Preparar Ambiente en Windows
+```
+# Crear entorno virtual
+python -m venv venv
+# Activar entorno virtual
+venv\Scripts\activate
+# En caso de que se quiera desactivar el entorno virtual
+deactivate
+# Dirigirse a la carpeta del componente
+cd black_list
+-- Instalar dependencias
+pip install -r requirements.txt
+```
+
+## Correr pruebas unitarias
+```
+coverage run --source=. -m unittest tests/test_blacklist_email.py
 coverage report --fail-under=80
+```
+
 
 [Implementar deploy en AWS Beanstalk](https://docs.aws.amazon.com/es_es/elasticbeanstalk/latest/dg/using-features.rolling-version-deploy.html)
 

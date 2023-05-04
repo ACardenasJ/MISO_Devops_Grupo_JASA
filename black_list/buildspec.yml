@@ -4,6 +4,8 @@ phases:
   pre_build:
     commands:
       - pip install -r requirements.txt
+      - coverage run --source=. --omit=*/__init__.py,*/tests/* -m unittest tests/test_blacklist_email.py
+      - coverage report --fail-under=80
 artifacts:
   files:
     - '**/*'

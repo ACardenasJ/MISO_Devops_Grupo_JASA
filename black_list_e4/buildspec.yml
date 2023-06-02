@@ -1,0 +1,39 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 406838468998.dkr.ecr.us-east-1.amazonaws.com
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...          
+      - docker build -t black_list_dt:latest .
+      - docker tag black_list_dt:latest 406838468998.dkr.ecr.us-east-1.amazonaws.com/black_list_dt:latest      
+  post_build:
+    commands:
+      - echo Running tests...
+      - pip install -r requirements.txt
+      - coverage run --source=. --omit=*/__init__.py,*/tests/* -m unittest tests/test_blacklist_email.py
+      - coverage report --fail-under=80
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
+      - docker push 406838468998.dkr.ecr.us-east-1.amazonaws.com/black_list_dt:latest
+      - echo Writing Image Definitions file...
+      - printf '[{"name":"Container-app-python","imageUri":"406838468998.dkr.ecr.us-east-1.amazonaws.com/black_list_dt:latest"}]' > imagedefinitions.json
+      - printf '{"ImageURI":"406838468998.dkr.ecr.us-east-1.amazonaws.com/black_list_dt:latest"}' > imageDetail.json
+      - cat imagedefinitions.json 
+artifacts:
+  files:
+    - '**/*'
+    - imagedefinitions.json
+    - imageDetail.json
+  secondary-artifacts:
+    DefinitionArtifact:
+      files:
+        - appspec.yaml
+        - taskdef.json
+    ImageArtifact:
+      files:
+        - imageDetail.json

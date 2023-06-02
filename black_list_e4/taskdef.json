@@ -1,0 +1,24 @@
+{
+    "executionRoleArn": "arn:aws:iam::406838468998:role/ecsTaskExecutionRole",
+    "containerDefinitions": [
+        {
+            "portMappings": [
+                {
+                    "hostPort": 3003,
+                    "protocol": "tcp",
+                    "containerPort": 3003
+                }
+            ],
+            "image": "<IMAGE1_NAME>",
+            "essential": true,
+            "name": "Container-blacklist-api"
+        }
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "networkMode": "awsvpc",
+    "cpu": "512",
+    "memory": "1024",
+    "family": "Tareas_blacklist_api"
+}

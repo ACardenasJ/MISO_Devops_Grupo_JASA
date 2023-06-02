@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "Resources": [
+        {
+            "TargetService": {
+                "Type": "AWS::ECS::Service",
+                "Properties": {
+                    "TaskDefinition": "arn:aws:ecs:us-east-1:406838468998:task-definition/Tareas_blacklist_api:2",
+                    "LoadBalancerInfo": {
+                        "ContainerName": "Container-blacklist-api",
+                        "ContainerPort": 3003
+                    }
+                }
+            }
+        }
+    ]
+}

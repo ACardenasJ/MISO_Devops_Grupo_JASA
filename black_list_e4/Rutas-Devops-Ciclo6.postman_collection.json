@@ -1,0 +1,144 @@
+{
+	"info": {
+		"_postman_id": "532de590-be19-4feb-8615-48ed0ed6d5f7",
+		"name": "DEVOPS_BlackList",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5647548"
+	},
+	"item": [
+		{
+			"name": "Ping Service",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{url}}/blacklists/ping",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"blacklists",
+						"ping"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{url}}/",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar a BlackList",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 1234321234321",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"js.sanchezl12@uniandes.edu.co\",\n    \"app_uuid\":\"c7d2ecdb-4cc4-4fac-9fd1-3d174621feb4\",\n    \"blocked_reason\":\"Test\",\n    \"ipSolicitud\":\"10.18.23.123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{url}}/blacklists",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"blacklists"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consultar Black List",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 1234321234321",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"js.sanchezl12@uniandes.edu.co\",\n    \"app_uuid\":\"c7d2ecdb-4cc4-4fac-9fd1-3d174621feb4\",\n    \"blocked_reason\":\"Test\",\n    \"ipSolicitud\":\"10.18.23.123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{url}}/blacklists/js.sanchezl12@uniandes.edu.co",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"blacklists",
+						"js.sanchezl12@uniandes.edu.co"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "apientrega1devopstest1-env.eba-a9aqhczm.us-east-1.elasticbeanstalk.com/",
+			"type": "string"
+		}
+	]
+}
